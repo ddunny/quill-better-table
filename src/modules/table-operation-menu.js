@@ -1,16 +1,7 @@
 import Quill from 'quill'
-import { css, getRelativeRect } from '../utils'
+import {css, getRelativeRect} from '../modules/index'
 
 // svg icons
-import operationIcon1 from '../assets/icons/icon_operation_1.svg'
-import operationIcon2 from '../assets/icons/icon_operation_2.svg'
-import operationIcon3 from '../assets/icons/icon_operation_3.svg'
-import operationIcon4 from '../assets/icons/icon_operation_4.svg'
-import operationIcon5 from '../assets/icons/icon_operation_5.svg'
-import operationIcon6 from '../assets/icons/icon_operation_6.svg'
-import operationIcon7 from '../assets/icons/icon_operation_7.svg'
-import operationIcon8 from '../assets/icons/icon_operation_8.svg'
-import operationIcon9 from '../assets/icons/icon_operation_9.svg'
 
 const MENU_MIN_HEIHGT = 150
 const MENU_WIDTH = 200
@@ -21,8 +12,7 @@ const DEFAULT_COLOR_SUBTITLE = 'Background Colors'
 const MENU_ITEMS_DEFAULT = {
   insertColumnRight: {
     text: 'Insert column right',
-    iconSrc: operationIcon1,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       let colIndex = getColToolCellIndexByBoundary(
         this.columnToolCells,
@@ -55,8 +45,7 @@ const MENU_ITEMS_DEFAULT = {
 
   insertColumnLeft: {
     text: 'Insert column left',
-    iconSrc: operationIcon2,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       let colIndex = getColToolCellIndexByBoundary(
         this.columnToolCells,
@@ -89,8 +78,7 @@ const MENU_ITEMS_DEFAULT = {
 
   insertRowUp: {
     text: 'Insert row up',
-    iconSrc: operationIcon3,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       const affectedCells = tableContainer.insertRow(
         this.boundary,
@@ -112,8 +100,7 @@ const MENU_ITEMS_DEFAULT = {
 
   insertRowDown: {
     text: 'Insert row down',
-    iconSrc: operationIcon4,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       const affectedCells = tableContainer.insertRow(
         this.boundary,
@@ -135,12 +122,11 @@ const MENU_ITEMS_DEFAULT = {
 
   mergeCells: {
     text: 'Merge selected cells',
-    iconSrc: operationIcon5,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       // compute merged Cell rowspan, equal to length of selected rows
       const rowspan = tableContainer.rows().reduce((sum, row) => {
-        let rowRect  = getRelativeRect(
+        let rowRect = getRelativeRect(
           row.domNode.getBoundingClientRect(),
           this.quill.root.parentNode
         )
@@ -185,8 +171,7 @@ const MENU_ITEMS_DEFAULT = {
 
   unmergeCells: {
     text: 'Unmerge cells',
-    iconSrc: operationIcon6,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       tableContainer.unmergeCells(
         this.selectedTds,
@@ -199,8 +184,7 @@ const MENU_ITEMS_DEFAULT = {
 
   deleteColumn: {
     text: 'Delete selected columns',
-    iconSrc: operationIcon7,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       let colIndexes = getColToolCellIndexesByBoundary(
         this.columnToolCells,
@@ -227,8 +211,7 @@ const MENU_ITEMS_DEFAULT = {
 
   deleteRow: {
     text: 'Delete selected rows',
-    iconSrc: operationIcon8,
-    handler () {
+    handler() {
       const tableContainer = Quill.find(this.table)
       tableContainer.deleteRow(
         this.boundary,
@@ -241,8 +224,7 @@ const MENU_ITEMS_DEFAULT = {
 
   deleteTable: {
     text: 'Delete table',
-    iconSrc: operationIcon9,
-    handler () {
+    handler() {
       const betterTableModule = this.quill.getModule('better-table')
       const tableContainer = Quill.find(this.table)
       betterTableModule.hideTableTools()
@@ -253,9 +235,9 @@ const MENU_ITEMS_DEFAULT = {
 }
 
 export default class TableOperationMenu {
-  constructor (params, quill, options) {
-    const betterTableModule = quill.getModule('better-table')
-    this.tableSelection = betterTableModule.tableSelection
+  constructor(params, quill, options) {
+    const betterTableModule = quill.getModule('better-table');
+    this.tableSelection = betterTableModule.tableSelection;
     this.table = params.table
     this.quill = quill
     this.options = options
@@ -267,23 +249,22 @@ export default class TableOperationMenu {
     this.columnToolCells = this.tableColumnTool.colToolCells()
     this.colorSubTitle = options.color && options.color.text ? options.color.text : DEFAULT_COLOR_SUBTITLE
     this.cellColors = options.color && options.color.colors ? options.color.colors : DEFAULT_CELL_COLORS
-
     this.menuInitial(params)
     this.mount()
     document.addEventListener("click", this.destroyHandler, false)
   }
 
-  mount () {
+  mount() {
     document.body.appendChild(this.domNode)
   }
 
-  destroy () {
+  destroy() {
     this.domNode.remove()
     document.removeEventListener("click", this.destroyHandler, false)
     return null
   }
 
-  menuInitial ({ table, left, top }) {
+  menuInitial({table, left, top}) {
     this.domNode = document.createElement('div')
     this.domNode.classList.add('qlbt-operation-menu')
     css(this.domNode, {
@@ -322,14 +303,14 @@ export default class TableOperationMenu {
     }
 
     // create dividing line
-    function dividingCreator () {
+    function dividingCreator() {
       const dividing = document.createElement('div')
       dividing.classList.add('qlbt-operation-menu-dividing')
       return dividing
     }
 
     // create subtitle for menu
-    function subTitleCreator (title) {
+    function subTitleCreator(title) {
       const subTitle = document.createElement('div')
       subTitle.classList.add('qlbt-operation-menu-subtitle')
       subTitle.innerText = title
@@ -337,7 +318,7 @@ export default class TableOperationMenu {
     }
   }
 
-  colorsItemCreator (colors) {
+  colorsItemCreator(colors) {
     const self = this
     const node = document.createElement('div')
     node.classList.add('qlbt-operation-color-picker')
@@ -347,7 +328,7 @@ export default class TableOperationMenu {
       node.appendChild(colorBox)
     })
 
-    function colorBoxCreator (color) {
+    function colorBoxCreator(color) {
       const box = document.createElement('div')
       box.classList.add('qlbt-operation-color-picker-item')
       box.setAttribute('data-color', color)
@@ -368,26 +349,21 @@ export default class TableOperationMenu {
     return node
   }
 
-  menuItemCreator ({ text, iconSrc, handler }) {
+  menuItemCreator({text, handler}) {
     const node = document.createElement('div')
     node.classList.add('qlbt-operation-menu-item')
-
-    const iconSpan = document.createElement('span')
-    iconSpan.classList.add('qlbt-operation-menu-icon')
-    iconSpan.innerHTML = iconSrc
 
     const textSpan = document.createElement('span')
     textSpan.classList.add('qlbt-operation-menu-text')
     textSpan.innerText = text
 
-    node.appendChild(iconSpan)
     node.appendChild(textSpan)
     node.addEventListener('click', handler.bind(this), false)
     return node
   }
 }
 
-function getColToolCellIndexByBoundary (cells, boundary, conditionFn, container) {
+function getColToolCellIndexByBoundary(cells, boundary, conditionFn, container) {
   return cells.reduce((findIndex, cell) => {
     let cellRect = getRelativeRect(cell.getBoundingClientRect(), container)
     if (conditionFn(cellRect, boundary)) {
@@ -397,7 +373,7 @@ function getColToolCellIndexByBoundary (cells, boundary, conditionFn, container)
   }, false)
 }
 
-function getColToolCellIndexesByBoundary (cells, boundary, conditionFn, container) {
+function getColToolCellIndexesByBoundary(cells, boundary, conditionFn, container) {
   return cells.reduce((findIndexes, cell) => {
     let cellRect = getRelativeRect(
       cell.getBoundingClientRect(),
