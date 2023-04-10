@@ -27,7 +27,7 @@
   "homepage": "https://github.com/soccerloway/quill-better-table#readme",
   "dependencies": {},
   "devDependencies": {
-    "quill": "^2.0.0-dev.3",
+    "quill": "^1.3.7",
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "babel-loader": "^8.0.5",
