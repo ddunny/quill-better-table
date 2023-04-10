@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/soccerloway/quill-better-table.git"
+    "url": "git+https://github.com/ddunny/quill-better-table.git"
   },
   "keywords": [
     "quill",
@@ -22,9 +22,9 @@
   "author": "soccerloway",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/soccerloway/quill-better-table/issues"
+    "url": "https://github.com/ddunny/quill-better-table.git/issues"
   },
-  "homepage": "https://github.com/soccerloway/quill-better-table#readme",
+  "homepage": "https://github.com/ddunny/quill-better-table.git#readme",
   "dependencies": {},
   "devDependencies": {
     "quill": "^1.3.7",
